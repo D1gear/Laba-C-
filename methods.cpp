@@ -1,5 +1,7 @@
 #include "headers.h"
+
 int StudentInfo::countOfStudents = 0;
+
 StudentInfo::StudentInfo(string _surname, int _age, double _mid) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
@@ -7,6 +9,7 @@ StudentInfo::StudentInfo(string _surname, int _age, double _mid) {
     mid = _mid;
     countOfStudents++;
 }
+
 StudentInfo::StudentInfo(string _surname, int _age) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
@@ -14,6 +17,7 @@ StudentInfo::StudentInfo(string _surname, int _age) {
     mid = 0;
     ++countOfStudents;
 }
+
 StudentInfo::StudentInfo(string _surname) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
@@ -40,6 +44,16 @@ StudentInfo::~StudentInfo() {
     --countOfStudents;
 }
 
+void StudentInfo::displayInfo() const {
+    cout << "Surname: " << *surname << ", Age: " << age << ", Mid: "<< mid << endl;
+}
+
+void StudentWithFullName::displayInfo() const {
+    cout << "Surname: " << *surname << ", First Name: " << firstName << ", Patronymic: " << patronymic << ", Age: " << age << ", Mid:" << mid << endl;
+}
+
+void StudentWithSpecialty::displayInfo() const {
+    cout << "Surname: " << *surname << ", Age: " << age << ", Mid: " << mid << ", Specialty: " << specialty << endl;}
 
 StudentInfo StudentInfo::operator+(const StudentInfo& other) const {
     return StudentInfo(*surname, age + other.age, mid + other.mid);
