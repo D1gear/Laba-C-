@@ -67,7 +67,7 @@ public:
     StudentWithSpecialty(string _surname, int _age, string _specialty)
             : StudentInfo(_surname, _age), specialty(_specialty) {}
 
-    void displayInfo() const override;  // Переопределенный метод displayInfo — добавлено
+    void displayInfo() const override;
 
     string getSpecialty() const { return specialty; }
     void setSpecialty(const string& _specialty) { specialty = _specialty; }
