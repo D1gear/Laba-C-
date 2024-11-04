@@ -6,7 +6,8 @@ int main() {    // Создаем объекты каждого типа
     // Демонстрация работы виртуальных функций
     StudentInfo* students[] = {&basicStudent, &fullNameStudent, &specialtyStudent};
     cout << "Displaying information for each student type using virtual function:" << endl;
-    for (auto student : students) {
+    for (int i;i<3;i++) {
+        StudentInfo* student = students[i];
         student->displayInfo();
     }
     // Демонстрация копирования объектов
