@@ -13,7 +13,7 @@ public:
     virtual ~StudentInfo();
 
     virtual void displayInfo() const;
-
+    virtual void short_Info() const;
     string get_Surname() ;
     int get_Age() ;
     double get_Mid() ;
@@ -50,6 +50,7 @@ public:
     StudentWithFullName(string _surname, int _age, string _firstName, string _patronymic)
             : StudentInfo(_surname, _age), firstName(_firstName), patronymic(_patronymic) {}
     void displayInfo() const override;
+    void short_Info() const override;
     string getFirstName() const { return firstName; }
     string getPatronymic() const { return patronymic; }
     void setFirstName(const string& _firstName) { firstName = _firstName; }
@@ -68,10 +69,22 @@ public:
             : StudentInfo(_surname, _age), specialty(_specialty) {}
 
     void displayInfo() const override;
-
+    void short_Info() const override;
     string getSpecialty() const { return specialty; }
     void setSpecialty(const string& _specialty) { specialty = _specialty; }
 
 private:
     string specialty;
+};
+class Binary_Tree{
+public:
+    void first_node(StudentInfo* stud_ptr);
+    void insert(StudentInfo* stud_ptr);
+    void insert_by_number(StudentInfo* stud_ptr, int number);
+    void delete_by_number(int number);
+    StudentInfo* search(string sur_f);
+    int find_last_number();
+    void draw_a_tree();
+private:
+    StudentInfo* massive[100]={nullptr};
 };

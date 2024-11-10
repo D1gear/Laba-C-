@@ -1,7 +1,6 @@
 #include "headers.h"
-
 int StudentInfo::countOfStudents = 0;
-
+//конструкторы
 StudentInfo::StudentInfo(string _surname, int _age, double _mid) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
@@ -9,7 +8,6 @@ StudentInfo::StudentInfo(string _surname, int _age, double _mid) {
     mid = _mid;
     countOfStudents++;
 }
-
 StudentInfo::StudentInfo(string _surname, int _age) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
@@ -17,7 +15,6 @@ StudentInfo::StudentInfo(string _surname, int _age) {
     mid = 0;
     ++countOfStudents;
 }
-
 StudentInfo::StudentInfo(string _surname) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
@@ -43,7 +40,7 @@ StudentInfo::~StudentInfo() {
     delete[] surname;
     --countOfStudents;
 }
-
+//displayInfo
 void StudentInfo::displayInfo() const {
     cout << "Surname: " << *surname << ", Age: " << age << ", Mid: "<< mid << endl;
 }
@@ -53,8 +50,21 @@ void StudentWithFullName::displayInfo() const {
 }
 
 void StudentWithSpecialty::displayInfo() const {
-    cout << "Surname: " << *surname << ", Age: " << age << ", Mid: " << mid << ", Specialty: " << specialty << endl;}
+    cout << "Surname: " << *surname << ", Age: " << age << ", Mid: " << mid << ", Specialty: " << specialty << endl;
+}
+//short_Info
+void StudentInfo::short_Info() const {
+    cout << "SN: " << *surname;
+}
 
+void StudentWithFullName::short_Info() const {
+    cout << "SN: " << *surname << ", FN: " << firstName;
+}
+
+void StudentWithSpecialty::short_Info() const {
+    cout << "SN: " << *surname<< ", SPL: " << specialty;
+}
+//перегрузка операторов
 StudentInfo StudentInfo::operator+(const StudentInfo& other) const {
     return StudentInfo(*surname, age + other.age, mid + other.mid);
 }
@@ -73,8 +83,7 @@ StudentInfo StudentInfo::operator++(int) {
 StudentInfo::operator int() const {
     return mid;
 }
-
-
+//перегрузка операторов ввода и вывода
 ofstream& operator << (ofstream& os, StudentInfo &p){
     os<<*p.surname <<" "<< p.age <<" "<< p.mid << endl;
     return os;
@@ -91,13 +100,14 @@ istream& operator >> (istream& is, StudentInfo &p){
     is>>*p.surname>>p.age>>p.mid;
     return is;
 }
-
+//запись и чтение бинарного файла
 void bin_write(ofstream& f1, StudentInfo& student){
     f1.write((char *) &student, sizeof(StudentInfo));
 }
 void bin_read(ifstream& f1, StudentInfo& student){
     f1.read((char *) &student, sizeof(StudentInfo));
 }
+//get-теры и set-теры
 string StudentInfo::get_Surname() { return *surname; }
 int StudentInfo::get_Age() { return age; }
 double StudentInfo::get_Mid() { return mid; }
@@ -111,3 +121,90 @@ void StudentInfo::set_Surname(string _surname) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
 }
+//бинарное дерево
+
+void Binary_Tree::first_node(StudentInfo* stud_ptr){
+    massive[1]=stud_ptr;
+}
+void Binary_Tree::insert(StudentInfo* stud_ptr){
+    for(int i=1; i<100;i++){
+        if(massive[i]==nullptr){ //поиск первого nullptr для последующей вставки
+            massive[i]=stud_ptr;
+            break;
+        }
+    }
+}
+void Binary_Tree::insert_by_number(StudentInfo* stud_ptr, int number){
+    if(number%2==0){
+        if(massive[number/2]!=nullptr){
+            massive[number]=stud_ptr;
+        }
+        else{
+            cout<<"There is no parent for this root."<<endl;
+        }
+    }
+    else{
+        if(massive[(number-1)/2]!=nullptr){
+            massive[number]=stud_ptr;
+        }
+        else{
+            cout<<"There is no parent for this root."<<endl;
+        }
+    }
+}
+void Binary_Tree::delete_by_number(int number) {
+    if (massive[number * 2] == nullptr && massive[(number * 2 + 1)] == nullptr) {
+        massive[number] = nullptr;
+    } else if (massive[number * 2] == nullptr && massive[(number * 2 + 1)] != nullptr) {
+        massive[number] = massive[(number * 2 + 1)];
+        delete_by_number((number * 2 + 1));
+    } else {
+        massive[number] = massive[number * 2];
+        delete_by_number(number * 2);
+    }
+}
+StudentInfo* Binary_Tree::search(string sur_f) {
+    int i=1;
+    for(;i<100;i++){
+        if(massive[i]->get_Surname()==sur_f){
+            return massive[i];
+        }
+    }
+    if(i==100){
+        cout<<"No found.";
+        return nullptr;
+    }
+}
+int Binary_Tree::find_last_number() {
+    int marker=0;
+    for(int i=99;i>0;i--){
+        if(massive[i]!=nullptr){
+            marker=i;
+            return marker;
+        }
+    }
+}
+void Binary_Tree::draw_a_tree() {
+    int marker=find_last_number();
+    int n=0;
+    int n_on_the_level=1;
+    for(int i=1; i<=marker;){
+        n=0;
+        for(n, n_on_the_level;n<n_on_the_level;n++, i++){
+            if(massive[i]!=nullptr){
+                cout<<"("<<i<<")";
+                massive[i]->short_Info();
+                cout<<"  ";
+            }
+            else{
+                cout<<"("<<i<<")"<<"0"<<"  ";
+            }
+        }
+        cout<<endl;
+        n_on_the_level*=2;
+    }
+}
+
+
+
+
