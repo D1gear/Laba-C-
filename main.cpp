@@ -13,7 +13,7 @@ int main() {
     StudentWithSpecialty s11("k",19, 3.4, "AIdeveloper");
     StudentInfo s12("l");
     StudentInfo* students[]={&s1,&s2,&s3, &s4,&s5,&s6,&s7,&s8,&s9,&s10,&s11,&s12};
-    Binary_Tree tree1;
+    Binary_Tree<StudentInfo> tree1;
     tree1.first_node(students[0]);
     for(int i=1; i<12;i++){
         tree1.insert(students[i]);
@@ -32,4 +32,34 @@ int main() {
     tree1.draw_a_tree();
     StudentInfo* misterX = tree1.search("i");
     misterX->short_Info();
-     }
+    cout<<endl;
+
+    int W=1;
+    int A=2;
+    int S=3;
+    int D=4;
+    int Z=5;
+    int* numbers[]={&W,&A,&S,&D,&Z};
+    Binary_Tree<int> tree_int;
+    tree_int.first_node(numbers[0]);
+    for(int i=1; i<5;i++){
+        tree_int.insert(numbers[i]);
+    }
+    tree_int.draw_a_tree_not_class();
+    int* find=tree_int.search(3);
+    cout<<*find<<endl;
+
+
+    double X=1.01;
+    double C=2.02;
+    double V=3.03;
+    double B=4.04;
+    double N=5.05;
+    double* numbers_double[]={&X,&C,&V,&B,&N};
+    Binary_Tree<double> tree_double;
+    tree_double.first_node(numbers_double[0]);
+    for(int i=1; i<5;i++){
+        tree_double.insert(numbers_double[i]);
+    }
+    tree_double.draw_a_tree_not_class();
+}
