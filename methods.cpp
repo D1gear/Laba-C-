@@ -165,12 +165,14 @@ void StudentInfo::set_Surname(string _surname) {
     surname = new string[sizeof(_surname)];
     *surname = _surname;
 }
+/*
 //бинарное дерево
-
-void Binary_Tree::first_node(StudentInfo* stud_ptr){
-    massive[1]=stud_ptr;
+template <class Data>
+    void Binary_Tree<Data>::first_node(Data* stud_ptr){
+        massive[1]=stud_ptr;
 }
-void Binary_Tree::insert(StudentInfo* stud_ptr){
+template <class Data>
+void Binary_Tree<Data>::insert(Data* stud_ptr){
     for(int i=1; i<100;i++){
         if(massive[i]==nullptr){ //поиск первого nullptr для последующей вставки
             massive[i]=stud_ptr;
@@ -178,7 +180,8 @@ void Binary_Tree::insert(StudentInfo* stud_ptr){
         }
     }
 }
-void Binary_Tree::insert_by_number(StudentInfo* stud_ptr, int number){
+template <class Data>
+void Binary_Tree<Data>::insert_by_number(Data* stud_ptr, int number){
     if(number%2==0){
         if(massive[number/2]!=nullptr){
             massive[number]=stud_ptr;
@@ -196,7 +199,8 @@ void Binary_Tree::insert_by_number(StudentInfo* stud_ptr, int number){
         }
     }
 }
-void Binary_Tree::delete_by_number(int number) {
+template <class Data>
+void Binary_Tree<Data>::delete_by_number(int number) {
     if (massive[number * 2] == nullptr && massive[(number * 2 + 1)] == nullptr) {
         massive[number] = nullptr;
     } else if (massive[number * 2] == nullptr && massive[(number * 2 + 1)] != nullptr) {
@@ -207,7 +211,8 @@ void Binary_Tree::delete_by_number(int number) {
         delete_by_number(number * 2);
     }
 }
-StudentInfo* Binary_Tree::search(string sur_f) {
+template <class Data>
+Data* Binary_Tree<Data>::search(string sur_f) {
     int i=1;
     for(;i<100;i++){
         if(massive[i]->get_Surname()==sur_f){
@@ -219,7 +224,8 @@ StudentInfo* Binary_Tree::search(string sur_f) {
         return nullptr;
     }
 }
-int Binary_Tree::find_last_number() {
+template <class Data>
+int Binary_Tree<Data>::find_last_number() {
     int marker=0;
     for(int i=99;i>0;i--){
         if(massive[i]!=nullptr){
@@ -228,7 +234,8 @@ int Binary_Tree::find_last_number() {
         }
     }
 }
-void Binary_Tree::draw_a_tree() {
+template <class Data>
+void Binary_Tree<Data>::draw_a_tree() {
     int marker=find_last_number();
     int n=0;
     int n_on_the_level=1;
@@ -251,4 +258,4 @@ void Binary_Tree::draw_a_tree() {
 
 
 
-
+*/

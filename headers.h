@@ -76,15 +76,126 @@ public:
 private:
     string specialty;
 };
+template <class Data>
 class Binary_Tree{
 public:
-    void first_node(StudentInfo* stud_ptr);
-    void insert(StudentInfo* stud_ptr);
-    void insert_by_number(StudentInfo* stud_ptr, int number);
-    void delete_by_number(int number);
-    StudentInfo* search(string sur_f);
-    int find_last_number();
-    void draw_a_tree();
+    void first_node(Data* stud_ptr){
+        massive[1]=stud_ptr;
+    }
+    void insert(Data* stud_ptr){
+        for(int i=1; i<100;i++){
+            if(massive[i]==nullptr){ //поиск первого nullptr для последующей вставки
+                massive[i]=stud_ptr;
+                break;
+            }
+        }
+    }
+    void insert_by_number(Data* stud_ptr, int number){
+        if(number%2==0){
+            if(massive[number/2]!=nullptr){
+                massive[number]=stud_ptr;
+            }
+            else{
+                cout<<"There is no parent for this root."<<endl;
+            }
+        }
+        else{
+            if(massive[(number-1)/2]!=nullptr){
+                massive[number]=stud_ptr;
+            }
+            else{
+                cout<<"There is no parent for this root."<<endl;
+            }
+        }
+    }
+    void delete_by_number(int number){
+        if (massive[number * 2] == nullptr && massive[(number * 2 + 1)] == nullptr) {
+            massive[number] = nullptr;
+        } else if (massive[number * 2] == nullptr && massive[(number * 2 + 1)] != nullptr) {
+            massive[number] = massive[(number * 2 + 1)];
+            delete_by_number((number * 2 + 1));
+        } else {
+            massive[number] = massive[number * 2];
+            delete_by_number(number * 2);
+        }
+    }
+    int find_last_number(){
+        int marker=0;
+        for(int i=99;i>0;i--){
+            if(massive[i]!=nullptr){
+                marker=i;
+                return marker;
+            }
+        }
+    }
+    Data* search(string sur_f)
+    {
+        int i=1;
+        for(;i<100;i++){
+            if(massive[i]->get_Surname()==sur_f){
+                return massive[i];
+            }
+        }
+        if(i==100){
+            cout<<"No found.";
+            return nullptr;
+        }
+    }
+    void draw_a_tree()
+    {
+        int marker=find_last_number();
+        int n=0;
+        int n_on_the_level=1;
+        for(int i=1; i<=marker;){
+            n=0;
+            for(n, n_on_the_level;n<n_on_the_level;n++, i++){
+                if(massive[i]!=nullptr){
+                    cout<<"("<<i<<")";
+                    massive[i]->short_Info();
+                    cout<<"  ";
+                }
+                else{
+                    cout<<"("<<i<<")"<<"0"<<"  ";
+                }
+            }
+            cout<<endl;
+            n_on_the_level*=2;
+        }
+    }
+    Data* search(Data sur_f)
+    {
+        int i=1;
+        for(;i<100;i++){
+            if(*massive[i]==sur_f){
+                return massive[i];
+            }
+        }
+        if(i==100){
+            cout<<"No found.";
+            return nullptr;
+        }
+    }
+    void draw_a_tree_not_class()
+    {
+        int marker=find_last_number();
+        int n=0;
+        int n_on_the_level=1;
+        for(int i=1; i<=marker;){
+            n=0;
+            for(n, n_on_the_level;n<n_on_the_level;n++, i++){
+                if(massive[i]!=nullptr){
+                    cout<<"("<<i<<")";
+                    cout<<*massive[i];
+                    cout<<"  ";
+                }
+                else{
+                    cout<<"("<<i<<")"<<"0"<<"  ";
+                }
+            }
+            cout<<endl;
+            n_on_the_level*=2;
+        }
+    }
 private:
-    StudentInfo* massive[100]={nullptr};
+    Data* massive[100]={nullptr};
 };
