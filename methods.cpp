@@ -16,21 +16,31 @@ StudentInfo::StudentInfo(string _surname, int _age, double _mid) {
         age = _age;
         mid = _mid;
         countOfStudents++;
+    } catch (const out_of_range& e) {
+        cerr << "Invalid input: " << e.what() << endl;
+    } catch (const bad_alloc& e) {
+        cerr << "Memory allocation error: " << e.what() << endl;
     } catch (const exception& e) {
-        cerr << "Error when creating StudentInfo: " << e.what() << endl;
-        // Установка дефолтных значений при ошибке
-        surname = new string("Error");
-        age = 18;
-        mid = 0;
+        cerr << "Error: " << e.what() << endl;
     }
 }
 
 StudentInfo::StudentInfo(string _surname, int _age) {
-    surname = new string[sizeof(_surname)];
-    *surname = _surname;
-    age = _age;
-    mid = 0;
-    ++countOfStudents;
+    try {
+        if (_age < 18 || _age > 100)
+            throw out_of_range("Age out of range");
+        surname = new string[sizeof(_surname)];
+        *surname = _surname;
+        age = _age;
+        mid = 0;
+        ++countOfStudents;
+    } catch (const out_of_range& e) {
+        cerr << "Invalid input: " << e.what() << endl;
+    } catch (const bad_alloc& e) {
+        cerr << "Memory allocation error: " << e.what() << endl;
+    } catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+    }
 }
 StudentInfo::StudentInfo(string _surname) {
     surname = new string[sizeof(_surname)];
@@ -132,15 +142,23 @@ int StudentInfo::getCountOfStudents(){
     return countOfStudents;
 }
 void StudentInfo::set_Age(int _age) {
-    if (_age < 0 || _age > 120)
-        throw out_of_range("Age out of range");
-    age = _age;
+   try {
+       if (_age < 0 || _age > 100)
+           throw out_of_range("Age out of range");
+       age = _age;
+   } catch (const out_of_range& e) {
+       cerr << "Out of range: " << e.what() << endl;
+   }
 }
 
 void StudentInfo::set_Mid(double _mid) {
-    if (_mid < 0.0 || _mid > 5.0)
-        throw out_of_range("Mid out of range");
-    mid = _mid;
+    try {
+        if (_mid < 0.0 || _mid > 5.0)
+            throw out_of_range("Mid out of range");
+        mid = _mid;
+    } catch (const out_of_range& e) {
+        cerr << "Out of range: " << e.what() << endl;
+    }
 }
 void StudentInfo::set_Surname(string _surname) {
     delete[] surname;
